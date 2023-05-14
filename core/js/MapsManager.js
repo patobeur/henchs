@@ -14,9 +14,9 @@ class MapsManager {
 	update() {
 		// check colliding 
 
+		this.refreshMapPos()
 		if (Keyboard.isUsingMove()) {
 			console.log('mooving')
-			this.refreshMapPos()
 		}
 		// if no collide move map
 	}
@@ -44,11 +44,14 @@ class MapsManager {
 
 			if (typeof Players != 'undefined') {
 				if (Players.players[Players.currentNumPlayer].datas) {
-					// this.map.style.left = (left + this.mapsdatas.datas.left) + 'px'
-					// this.map.style.top = (top + this.mapsdatas.datas.top) + 'px'
 					this.map.style.left = (left + this.mapsdatas.datas.left - Players.players[Players.currentNumPlayer].datas.left) + 'px'
 					this.map.style.top = (top + this.mapsdatas.datas.top - Players.players[Players.currentNumPlayer].datas.top) + 'px'
 				}
+			}
+			else {
+				this.map.style.left = (left + this.mapsdatas.datas.left - this.mapsdatas.spawns[0].datas.left) + 'px'
+				this.map.style.top = (top + this.mapsdatas.datas.top - this.mapsdatas.spawns[0].datas.top) + 'px'
+
 			}
 
 
@@ -107,7 +110,6 @@ class MapsManager {
 			job.forEach(element => {
 				if (typeof element.datas != 'undefined') {
 					let part = document.createElement(element.tag)
-					part.style.position = 'absolute'
 					this.appliqueCaA(element, part)
 					this.parts.push(part)
 					this.map.prepend(part)
@@ -119,7 +121,6 @@ class MapsManager {
 			this.mapsdatas.walls.forEach(element => {
 				if (typeof element.datas != 'undefined') {
 					let wall = document.createElement('div')
-					wall.style.position = 'absolute'
 					this.appliqueCaA(element, wall)
 					this.walls.push(wall)
 					this.map.prepend(wall)
@@ -131,14 +132,15 @@ class MapsManager {
 		let left = Math.floor(window.innerWidth / 2)
 		let top = Math.floor(window.innerHeight / 2)
 
-		console.log(this.mapsdatas.spawns[0].top)
-		console.log(this.mapsdatas.spawns[0].left)
-		this.map.style.left = (left + this.mapsdatas.datas.left - this.mapsdatas.spawns[0].left) + 'px'
-		this.map.style.top = (top + this.mapsdatas.datas.top - this.mapsdatas.spawns[0].top) + 'px'
+		// console.log(this.mapsdatas.spawns[0].top)
+		// console.log(this.mapsdatas.spawns[0].left)
+		this.map.style.left = (left + this.mapsdatas.datas.left - this.mapsdatas.spawns[0].datas.left) + 'px'
+		this.map.style.top = (top + this.mapsdatas.datas.top - this.mapsdatas.spawns[0].datas.top) + 'px'
 		document.body.appendChild(this.map)
 	}
 	appliqueCaA(element, target) {
 		if (typeof element.datas != 'undefined' && typeof target === 'object') {
+			target.style.position = 'absolute'
 			if (typeof element.datas.left != 'undefined') target.style.left = element.datas.left + 'px';
 			if (typeof element.datas.top != 'undefined') target.style.top = element.datas.top + 'px';
 			if (typeof element.datas.width != 'undefined') target.style.width = element.datas.width + 'px';
