@@ -3,22 +3,42 @@ const MAPS = [
 		name: 'one',
 		datas: { width: 500, height: 500, top: 0, left: 0, zIndex: 0 },
 		spawns: [
-			{ top: 250, left: 250, },
-			{ top: 100, left: 100, }
+			{
+				datas: {
+					className: 'spawn',
+					width: 50, height: 50, top: 250, left: 250, zIndex: 0,
+					alt: 'spawn1',
+					title: 'spawn1'
+				}
+			},
+			{
+				datas: {
+					className: 'spawn',
+					width: 50, height: 50, top: 250, left: 250, zIndex: 0,
+					alt: 'spawn1',
+					title: 'spawn1'
+				}
+			}
 		],
 		parts: [
 			{
 				name: 'one', tag: 'img', collide: false,
 				datas: {
+					className: 'part',
 					width: 126, height: 62, top: 50, left: -50, zIndex: 0,
 					transform: -7,
 					src: 'assets/img/nuages/nuages_05.png',
+					alt: 'one',
+					title: 'one',
 					childs: [
 						{
-							name: 'one', tag: 'img',
+							name: 'oneb', tag: 'img',
 							datas: {
+								className: 'part-item',
 								width: 126, height: 62, top: 50, left: -50, zIndex: 0,
-								src: 'assets/img/nuages/nuages_05.png'
+								src: 'assets/img/nuages/nuages_05.png',
+								alt: 'oneb',
+								title: 'oneb'
 							}
 						},
 					]
@@ -27,16 +47,22 @@ const MAPS = [
 			{
 				name: 'two', tag: 'img', collide: false,
 				datas: {
+					className: 'part',
 					width: 168, height: 78,
 					top: 110, left: 160, zIndex: 0,
-					src: 'assets/img/nuages/nuages_05.png'
+					src: 'assets/img/nuages/nuages_05.png',
+					alt: 'two',
+					title: 'two'
 				},
 			},
 			{
-				name: 'two', tag: 'img', collide: false, datas: {
+				name: 'three', tag: 'img', collide: false, datas: {
+					className: 'part',
 					width: 63, height: 31,
 					top: 210, left: 210, zIndex: 0,
-					src: 'assets/img/nuages/nuages_05.png'
+					src: 'assets/img/nuages/nuages_05.png',
+					alt: 'three',
+					title: 'three'
 				},
 			}
 		],
