@@ -94,15 +94,6 @@ class MapsManager {
 			this.appliqueCaA(this.mapsdatas.spawns[0], spawn)
 			this.spawns.push(spawn)
 			this.map.prepend(spawn)
-
-			// this.mapsdatas.spawns.forEach(element => {
-			// 	let start = 0;
-			// 	console.log("element------------------------", element)
-			// 	let spawn = document.createElement('div');
-			// 	this.appliqueCaA(element, spawn)
-			// 	this.spawns.push(spawn)
-			// 	this.map.prepend(spawn)
-			// });
 		}
 		// contents parts
 		if (typeof this.mapsdatas.parts === 'object' && this.mapsdatas.parts.length > 0) {
@@ -138,11 +129,12 @@ class MapsManager {
 		this.map.style.top = (top + this.mapsdatas.datas.top - this.mapsdatas.spawns[0].datas.top) + 'px'
 		document.body.appendChild(this.map)
 	}
-	appliqueCaA(element, target) {
+	appliqueCaA(element, target, centered) {
 		if (typeof element.datas != 'undefined' && typeof target === 'object') {
 			target.style.position = 'absolute'
 			if (typeof element.datas.left != 'undefined') target.style.left = element.datas.left + 'px';
 			if (typeof element.datas.top != 'undefined') target.style.top = element.datas.top + 'px';
+
 			if (typeof element.datas.width != 'undefined') target.style.width = element.datas.width + 'px';
 			if (typeof element.datas.height != 'undefined') target.style.height = element.datas.height + 'px';
 			if (typeof element.datas.transform != 'undefined') target.style.transform = 'rotate(' + element.datas.transform + 'deg)';
