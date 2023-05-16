@@ -71,6 +71,19 @@ body {
 	position: absolute;
 	background-color: rgba(0, 0, 0, 0.651);
 }
+.map .wall.w1{
+	background-color: rgba(250, 0, 0, 0.651);
+}
+.map .ghost {
+	position: absolute;
+	background-color: rgba(229, 255, 0, 0.651);
+	border: 1px dotted red;
+}
+.map .spawn {
+	position: absolute;
+	background-color: rgba(0, 0, 0, 0.651);
+	border-radius: 50%;
+}
 .map .dot {
 	position: absolute;
 	width:5px;

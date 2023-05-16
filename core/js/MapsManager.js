@@ -7,6 +7,7 @@ class MapsManager {
 		this.map.style.position = 'absolute'
 
 		this.mapsdatas = this.getMapDatas(0)
+		this.ghostDatas = DATAZ.ghostdatas
 		this.parts = []
 		this.walls = []
 		this.spawns = []
@@ -17,15 +18,47 @@ class MapsManager {
 		this.refreshMapPos()
 		if (Keyboard.isUsingMove()) {
 			console.log('mooving')
+			// console.log(this.ghostDatas[0].div)
+			console.log('isCollidingWithWalls:', this.isCollidingWithWalls(this.ghostDatas[0].div))
 		}
 		// if no collide move map
 	}
+	// checkk() {
+
+	// 	//get current grid 
+	// 	this.ghostDatas.grid = Maps.getCurrentGridPos(this.ghostDatas.datas);
+
+	// 	let way = Keyboard.way;
+	// 	let speed = 2;
+
+	// 	// adjust speed while diagonal move
+	// 	if ((way[0] || way[2]) && (way[1] || way[3])) { speed = Math.floor(speed / this.diagonalspeedratio); }
+
+
+
+	// 	// update move datas
+
+
+	// 	// if (P.collide === false) {
+	// 	if (way[0] && !way[2]) { this.ghostDatas.datas.topB -= speed; }
+	// 	if (way[2] && !way[0]) { this.ghostDatas.datas.topB += speed; }
+	// 	if (way[1] && !way[3]) { this.ghostDatas.datas.leftB += speed; }
+	// 	if (way[3] && !way[1]) { this.ghostDatas.datas.leftB -= speed; }
+
+	// 	if (way[0] && !way[2]) { this.ghostDatas.datas.top -= speed; }
+	// 	if (way[2] && !way[0]) { this.ghostDatas.datas.top += speed; }
+	// 	if (way[1] && !way[3]) { this.ghostDatas.datas.left += speed; }
+	// 	if (way[3] && !way[1]) { this.ghostDatas.datas.left -= speed; }
+	// 	// }
+	// 	// update theta (rotation)
+	// 	this.ghostDatas.theta = way[0] ? 0 : way[1] ? 90 : way[2] ? 180 : 270;
+	// }
 	changeToMap(num) {
 		this.mapsdatas = this.getMapDatas(num)
 	}
 	getMapDatas(num) {
-		if (!typeof num === 'number' || num < 0 || num >= MAPS.length) num = 0;
-		return MAPS[num]
+		if (!typeof num === 'number' || num < 0 || num >= DATAZ.maps.length) num = 0;
+		return DATAZ.maps[num]
 	}
 	getCurrentGridPos(datas) {
 		let x = datas.left > 0 ? Math.floor(datas.left / this.grid.x) + 1 : 1;
@@ -82,16 +115,22 @@ class MapsManager {
 			// this.map.style.top = (top + this.mapsdatas.datas.top - Players.players[Players.currentNumPlayer].datas.top) + 'px'
 		}
 	}
-	displayMap() {
+	displayMapOnce() {
 		this.map.style.width = this.mapsdatas.datas.width + 'px'
 		this.map.style.height = this.mapsdatas.datas.height + 'px'
 
+		// player ghost
+		if (this.ghostDatas[0]) {
+			let start = 0;
+			this.ghostDatas[0].div = document.createElement('div');
+			this.appliqueCaA(this.ghostDatas[0], this.ghostDatas[0].div, true)
+			this.map.prepend(this.ghostDatas[0].div)
+		}
 		// player spawns
 		if (typeof this.mapsdatas.spawns === 'object' && this.mapsdatas.spawns.length > 0) {
 			let start = 0;
-
 			let spawn = document.createElement('div');
-			this.appliqueCaA(this.mapsdatas.spawns[0], spawn)
+			this.appliqueCaA(this.mapsdatas.spawns[0], spawn, true)
 			this.spawns.push(spawn)
 			this.map.prepend(spawn)
 		}
@@ -120,20 +159,40 @@ class MapsManager {
 		}
 
 
-		let left = Math.floor(window.innerWidth / 2)
+		// first spawn recentered on center of screen
 		let top = Math.floor(window.innerHeight / 2)
-
+		let left = Math.floor(window.innerWidth / 2)
+		let reCenteredTop = -(this.mapsdatas.spawns[0].datas.height / 2)
+		let reCenteredLeft = -(this.mapsdatas.spawns[0].datas.width / 2)
 		// console.log(this.mapsdatas.spawns[0].top)
 		// console.log(this.mapsdatas.spawns[0].left)
-		this.map.style.left = (left + this.mapsdatas.datas.left - this.mapsdatas.spawns[0].datas.left) + 'px'
-		this.map.style.top = (top + this.mapsdatas.datas.top - this.mapsdatas.spawns[0].datas.top) + 'px'
+
+		// first spawn recenred on center of screen
+		let mapCurrentPosTop = (top + this.mapsdatas.datas.top - this.mapsdatas.spawns[0].datas.top + reCenteredTop)
+		let mapCurrentPosLeft = (left + this.mapsdatas.datas.left - this.mapsdatas.spawns[0].datas.left + reCenteredLeft)
+
+
+
+		this.map.style.top = mapCurrentPosTop + 'px'
+		this.map.style.left = mapCurrentPosLeft + 'px'
+
+		console.log("map", this.map.style.left, this.map.style.top)
+		console.log("spawn", this.mapsdatas.spawns[0].datas.left, this.mapsdatas.spawns[0].datas.top)
+
 		document.body.appendChild(this.map)
 	}
-	appliqueCaA(element, target, centered) {
+	appliqueCaA(element, target, centered = true) {
 		if (typeof element.datas != 'undefined' && typeof target === 'object') {
+			let centerTop = 0
+			let centerLeft = 0
+			if (centered === true) {
+				if (typeof element.datas.height != 'undefined') centerTop = element.datas.height / 2;
+				if (typeof element.datas.width != 'undefined') centerLeft = element.datas.width / 2;
+			}
 			target.style.position = 'absolute'
-			if (typeof element.datas.left != 'undefined') target.style.left = element.datas.left + 'px';
-			if (typeof element.datas.top != 'undefined') target.style.top = element.datas.top + 'px';
+			if (typeof element.datas.left != 'undefined') target.style.left = (element.datas.left - centerLeft) + 'px';
+			if (typeof element.datas.top != 'undefined') target.style.top = (element.datas.top - centerTop) + 'px';
+
 
 			if (typeof element.datas.width != 'undefined') target.style.width = element.datas.width + 'px';
 			if (typeof element.datas.height != 'undefined') target.style.height = element.datas.height + 'px';
@@ -141,6 +200,10 @@ class MapsManager {
 
 			if (typeof element.datas.className != 'undefined') target.className = element.datas.className;
 			if (typeof element.datas.src != 'undefined') target.src = element.datas.src;
+		}
+		else {
+
+			console.log(element[0], target)
 		}
 	}
 	addToMap(obj) {
@@ -156,14 +219,12 @@ class MapsManager {
 
 		let collide = false;
 		this.walls.forEach(item => {
-			let colliding = Algebras.overlapping(elem, item)
-
-			console.log(colliding)
+			let colliding = Algebra.overlapping(elem, item)
 			if (collide === false && colliding === true) {
 				collide = true
 			}
 		});
-		console.log('colliding:' + collide)
+		console.log('collide:' + collide)
 		return collide;
 	}
 

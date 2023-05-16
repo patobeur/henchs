@@ -10,7 +10,7 @@ class GAME {
 		if (this.errors.length === 0) {
 			// Players.setPlayerInitialPos()
 			// Players.addToBody()
-			Maps.displayMap()
+			Maps.displayMapOnce()
 			// Players.players[Players.currentNumPlayer].adddots()
 			this.run()
 		}
@@ -47,7 +47,7 @@ class GAME {
 	}
 }
 
-// const Algebra = new Algebras()
+const Algebra = new Algebras()
 // const Players = new PlayerManager();
 // const Henchs = new HenchsManager()
 const Maps = new MapsManager()
