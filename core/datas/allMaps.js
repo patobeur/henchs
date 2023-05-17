@@ -6,8 +6,10 @@ const DATAZ = {
 				className: 'ghost',
 				width: 25, height: 25, top: 0, left: 0, zIndex: 0,
 				alt: 'My ghost',
-				title: 'My ghost'
-			}
+				title: 'My ghost', transform: 10
+			},
+			speed: 2,
+			sommets: {}
 		}
 	],
 	maps: [
@@ -18,7 +20,7 @@ const DATAZ = {
 				{
 					datas: {
 						className: 'spawn',
-						width: 50, height: 50, top: 0, left: 0, zIndex: 0,
+						width: 50, height: 50, top: 50, left: 50, zIndex: 0,
 						alt: 'spawn1',
 						title: 'spawn1'
 					}
@@ -83,7 +85,9 @@ const DATAZ = {
 				{ datas: { className: 'wall', width: 500, height: 4, top: 498, left: 250, zIndex: 0, transform: 0 } },
 
 				{ datas: { className: 'wall', width: 4, height: 500, top: 250, left: 2, zIndex: 0, transform: 0 } },
-				{ datas: { className: 'wall', width: 4, height: 500, top: 250, left: 498, zIndex: 0, transform: 0 } }
+				{ datas: { className: 'wall', width: 4, height: 500, top: 250, left: 498, zIndex: 0, transform: 0 } },
+
+				{ datas: { className: 'wall', width: 50, height: 50, top: 225, left: 225, zIndex: 0, transform: 15 } },
 			]
 		},
 		{ name: 'two', datas: { width: 1200, height: 300, top: 0, left: 0, zIndex: 0 } }

@@ -77,12 +77,13 @@ body {
 .map .ghost {
 	position: absolute;
 	background-color: rgba(229, 255, 0, 0.651);
-	border: 1px dotted red;
+	/* border: 1px dotted red; */
 }
 .map .spawn {
 	position: absolute;
-	background-color: rgba(0, 0, 0, 0.651);
+	background-color: rgba(187, 187, 187, 0.075);
 	border-radius: 50%;
+	border: 2px dotted rgba(0, 0, 0, 0.24);
 }
 .map .dot {
 	position: absolute;

@@ -11,6 +11,9 @@ class GAME {
 			// Players.setPlayerInitialPos()
 			// Players.addToBody()
 			Maps.displayMapOnce()
+			Maps.displayGhostOnce()
+			Maps.checkk()
+
 			// Players.players[Players.currentNumPlayer].adddots()
 			this.run()
 		}
@@ -37,7 +40,7 @@ class GAME {
 		console.table(this.errors);
 	}
 	update() {
-		console.log('updating')
+		// console.log('updating')
 		if (this.errors.length === 0) {
 			// Players.update();
 			// Henchs.update();
