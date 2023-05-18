@@ -13,26 +13,24 @@ class MapsManager {
 		this.walls = []
 		this.spawns = []
 		this.player = { datas: { top: 0, left: 0 } }
+		//
 	}
 	start() {
-		this.displayMapOnce()
+		this.setMapDivSize()
+		this.setMapSpawnZones()
+		this.setMapParts()
+		this.setMapWalls()
+		this.setMapStyle()
 		this.displayGhostOnce()
+		document.body.appendChild(this.map)
+		this.refreshMapPos()
 	}
 	update() {
-		// check colliding 
-
 		if (Keyboard.isUsingMove()) {
-			// console.log('mooving')
-
-			// console.log(this.ghostDatas[0].div)
-			// console.log('way:', Keyboard.way)
-			// console.log('skills:', Keyboard.skills)
 			this.checkMoveRules()
-
 			// console.log('isCollidingWithWalls:', this.isCollidingWithWalls(this.ghostDatas[0].div))
+			this.refreshMapPos()
 		}
-		this.refreshMapPos()
-		// if no collide move map
 	}
 	checkMoveRules() {
 
@@ -45,56 +43,37 @@ class MapsManager {
 		// 	adjust speed while diagonal move
 		if ((way[0] || way[2]) && (way[1] || way[3])) { speed = Math.floor(speed / this.diagonalspeedratio); }
 
+		// update theta direction (rotation)
+		this.ghostDatas[0].theta = way[0] ? 0 : way[1] ? 90 : way[2] ? 180 : 270;
+
+		// store old position
 		let oldTop = Number(this.ghostDatas[0].datas.top) + 0;
 		let oldLeft = Number(this.ghostDatas[0].datas.left) + 0;
 
+		// adjust speed if diagonal moove
 		if (way[0] && !way[2]) { this.ghostDatas[0].datas.top -= speed; }
 		if (way[2] && !way[0]) { this.ghostDatas[0].datas.top += speed; }
 		if (way[1] && !way[3]) { this.ghostDatas[0].datas.left += speed; }
 		if (way[3] && !way[1]) { this.ghostDatas[0].datas.left -= speed; }
 
-		// update ghost div to get bouncing box
+
+		// update ghost div position to get bouncing box
 		this.ghostDatas[0].div.style.top = (this.ghostDatas[0].datas.top - (this.ghostDatas[0].datas.height / 2)) + 'px'
 		this.ghostDatas[0].div.style.left = (this.ghostDatas[0].datas.left - (this.ghostDatas[0].datas.width / 2)) + 'px'
 
+		let iscolliding = this.isCollidingWithWalls(this.ghostDatas[0].div)
 
-		if (this.isCollidingWithWalls(this.ghostDatas[0].div)) {
-			// put old data back if colliding
+		if (iscolliding) {
+			// restore old position back if colliding
 			this.ghostDatas[0].datas.top = oldTop
 			this.ghostDatas[0].datas.left = oldLeft
 
-		}
-		else {
-			// update theta (rotation)
-			this.ghostDatas[0].theta = way[0] ? 0 : way[1] ? 90 : way[2] ? 180 : 270;
-
-			// move the map 
-			let left = Math.floor(window.innerWidth / 2)
-			let top = Math.floor(window.innerHeight / 2)
-
-			// update player pos
-
+			// update ghost div position to get bouncing box
+			// this.ghostDatas[0].div.style.top = (this.ghostDatas[0].datas.top - (this.ghostDatas[0].datas.height / 2)) + 'px'
+			// this.ghostDatas[0].div.style.left = (this.ghostDatas[0].datas.left - (this.ghostDatas[0].datas.width / 2)) + 'px'
 		}
 
 
-
-
-
-
-		// 	// update move datas
-
-
-		// 	// if (P.collide === false) {
-		// 	if (way[0] && !way[2]) { this.ghostDatas.datas.topB -= speed; }
-		// 	if (way[2] && !way[0]) { this.ghostDatas.datas.topB += speed; }
-		// 	if (way[1] && !way[3]) { this.ghostDatas.datas.leftB += speed; }
-		// 	if (way[3] && !way[1]) { this.ghostDatas.datas.leftB -= speed; }
-
-		// 	if (way[0] && !way[2]) { this.ghostDatas.datas.top -= speed; }
-		// 	if (way[2] && !way[0]) { this.ghostDatas.datas.top += speed; }
-		// 	if (way[1] && !way[3]) { this.ghostDatas.datas.left += speed; }
-		// 	if (way[3] && !way[1]) { this.ghostDatas.datas.left -= speed; }
-		// 	// }
 	}
 	changeToMap(num) {
 		this.mapsdatas = this.getMapDatas(num)
@@ -111,14 +90,8 @@ class MapsManager {
 	}
 	refreshMapPos() {
 		if (typeof this.map != 'undefined') {
-
-			let left = Math.floor(window.innerWidth / 2)
-			let top = Math.floor(window.innerHeight / 2)
-
-
-			this.map.style.top = (top + this.mapsdatas.datas.top - this.ghostDatas[0].datas.top) + 'px'
-			this.map.style.left = (left + this.mapsdatas.datas.left - this.ghostDatas[0].datas.left) + 'px'
-
+			this.map.style.top = (Math.floor(window.innerHeight / 2) + this.mapsdatas.datas.top - this.ghostDatas[0].datas.top) + 'px'
+			this.map.style.left = (Math.floor(window.innerWidth / 2) + this.mapsdatas.datas.left - this.ghostDatas[0].datas.left) + 'px'
 		}
 	}
 	displayGhostOnce() {
@@ -131,9 +104,9 @@ class MapsManager {
 				this.ghostDatas[0].datas.top = this.mapsdatas.spawns[0].datas.top
 			}
 			this.ghostDatas[0].div = document.createElement('div');
-			// apply proprieties
+			// apply properties
 			this.appliqueCaA(this.ghostDatas[0], this.ghostDatas[0].div, true)
-			this.map.prepend(this.ghostDatas[0].div)
+			this.addToMap(this.ghostDatas[0].div)
 
 			// update player pos
 			this.player.datas.top = this.ghostDatas[0].datas.top
@@ -142,24 +115,13 @@ class MapsManager {
 		}
 
 	}
-	displayMapOnce() {
-		this.map.style.width = this.mapsdatas.datas.width + 'px'
-		this.map.style.height = this.mapsdatas.datas.height + 'px'
-
-		// player spawns
-		if (typeof this.mapsdatas.spawns[0] === 'object') {
-			let spawn = document.createElement('div');
-			this.appliqueCaA(this.mapsdatas.spawns[0], spawn, true)
-			this.spawns.push(spawn)
-			this.map.prepend(spawn)
-
+	setMapDivSize() {
+		if (typeof this.mapsdatas.datas === 'object') {
+			this.map.style.width = this.mapsdatas.datas.width + 'px'
+			this.map.style.height = this.mapsdatas.datas.height + 'px'
 		}
-
-
-
-
-
-
+	}
+	setMapParts() {
 		// contents parts
 		if (typeof this.mapsdatas.parts === 'object' && this.mapsdatas.parts.length > 0) {
 			let job = this.mapsdatas.parts
@@ -172,6 +134,8 @@ class MapsManager {
 				}
 			});
 		}
+	}
+	setMapWalls() {
 		// envirronement walls
 		if (typeof this.mapsdatas.walls === 'object' && this.mapsdatas.walls.length > 0) {
 			this.mapsdatas.walls.forEach(element => {
@@ -183,29 +147,24 @@ class MapsManager {
 				}
 			});
 		}
+	}
+	setMapSpawnZones() {
+		// player spawns
+		if (typeof this.mapsdatas.spawns[0] === 'object') {
+			let spawn = document.createElement('div');
+			this.appliqueCaA(this.mapsdatas.spawns[0], spawn, true)
+			this.spawns.push(spawn)
+			this.map.prepend(spawn)
+			this.addToMap(spawn)
 
-
-		// first spawn recentered on center of screen
-		let top = Math.floor(window.innerHeight / 2)
-		let left = Math.floor(window.innerWidth / 2)
-		let reCenteredTop = -(this.mapsdatas.spawns[0].datas.height / 2)
-		let reCenteredLeft = -(this.mapsdatas.spawns[0].datas.width / 2)
-		// console.log(this.mapsdatas.spawns[0].top)
-		// console.log(this.mapsdatas.spawns[0].left)
-
+		}
+	}
+	setMapStyle() {
 		// first spawn recenred on center of screen
-		let mapCurrentPosTop = (top + this.mapsdatas.datas.top - this.mapsdatas.spawns[0].datas.top + reCenteredTop)
-		let mapCurrentPosLeft = (left + this.mapsdatas.datas.left - this.mapsdatas.spawns[0].datas.left + reCenteredLeft)
-
-
-
+		let mapCurrentPosTop = (Math.floor(window.innerHeight / 2) + this.mapsdatas.datas.top - this.mapsdatas.spawns[0].datas.top - (this.mapsdatas.spawns[0].datas.height / 2))
+		let mapCurrentPosLeft = (Math.floor(window.innerWidth / 2) + this.mapsdatas.datas.left - this.mapsdatas.spawns[0].datas.left - (this.mapsdatas.spawns[0].datas.width / 2))
 		this.map.style.top = mapCurrentPosTop + 'px'
 		this.map.style.left = mapCurrentPosLeft + 'px'
-
-		console.log("map", this.map.style.left, this.map.style.top)
-		console.log("spawn", this.mapsdatas.spawns[0].datas.left, this.mapsdatas.spawns[0].datas.top)
-
-		document.body.appendChild(this.map)
 	}
 	appliqueCaA(element, target, centered = true) {
 		if (typeof element.datas != 'undefined' && typeof target === 'object') {
@@ -228,12 +187,11 @@ class MapsManager {
 			if (typeof element.datas.src != 'undefined') target.src = element.datas.src;
 		}
 		else {
-
-			console.log(element[0], target)
+			console.log(element, target)
 		}
 	}
-	addToMap(obj) {
-		this.map.appendChild(obj)
+	addToMap(obj, append = false) {
+		append === false ? this.map.appendChild(obj) : this.map.prepend(obj);
 	}
 	addHenchsToMap() {
 		Henchs.henchs.forEach(peon => {
