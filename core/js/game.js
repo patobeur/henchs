@@ -10,9 +10,7 @@ class GAME {
 		if (this.errors.length === 0) {
 			// Players.setPlayerInitialPos()
 			// Players.addToBody()
-			Maps.displayMapOnce()
-			Maps.displayGhostOnce()
-			Maps.checkk()
+			Maps.start();
 
 			// Players.players[Players.currentNumPlayer].adddots()
 			this.run()

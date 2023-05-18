@@ -14,7 +14,9 @@ class MapsManager {
 		this.spawns = []
 		this.player = { datas: { top: 0, left: 0 } }
 	}
-	checkk() {
+	start() {
+		this.displayMapOnce()
+		this.displayGhostOnce()
 	}
 	update() {
 		// check colliding 
