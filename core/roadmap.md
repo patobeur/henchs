@@ -15,7 +15,9 @@
 ## 3 - Add a Visual that can be moved with keyboard manager datas
  - [x] (it work ;))
  - [x] (ghostdiv added on the map ;))
- - [x] this will be used to test colissions with object
+ - [x] this will be used to test colissions with object bouncing box
+ - [x] this will be used to move player visual if no colision is detected
+ - [ ] ghostdiv can be hidden under the map if need but it must in the map element
 
 ## 4 - Add wall to the map !
  - [x] Four walls spawn add top,left,bottom and right sides of the map
