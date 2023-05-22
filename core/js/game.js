@@ -49,6 +49,7 @@ class GAME {
 }
 
 const Algebra = new Algebras()
+const DotsTrailer = new TrailDotsManager()
 // const Players = new PlayerManager();
 // const Henchs = new HenchsManager()
 const Maps = new MapsManager()
@@ -57,4 +58,5 @@ const Game = new GAME();
 
 window.onload = () => {
 	Game.start()
+
 }

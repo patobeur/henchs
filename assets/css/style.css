@@ -65,14 +65,11 @@ body {
 	position: absolute;
 	background-color: white;
 	z-index: 1;
-	background-image: url(/excel/map_one.svg);
+	/* background-image: url(/map_one.svg); */
 }
 .map .wall {
 	position: absolute;
-	background-color: rgba(0, 0, 0, 0.651);
-}
-.map .wall.w1{
-	background-color: rgba(250, 0, 0, 0.651);
+	background-color: rgba(255, 0, 0, 0.651);
 }
 .map .ghost {
 	position: absolute;
