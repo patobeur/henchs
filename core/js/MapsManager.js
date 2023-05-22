@@ -147,6 +147,28 @@ class MapsManager {
 				}
 			});
 		}
+		console.log('f', this.mapsdatas.datas)
+		let d = this.mapsdatas.datas
+		let thin = 2
+		let elements = [
+			{ datas: { className: 'wall top', width: d.width, height: thin, top: 0, left: Math.floor(d.width / 2), zIndex: 0 } },
+			{ datas: { className: 'wall bottom', width: d.width, height: thin, top: d.height - 2, left: Math.floor(d.width / 2), zIndex: 0 } },
+			{ datas: { className: 'wall left', width: thin, height: d.height, top: Math.floor(d.height / 2), left: 0, zIndex: 0 } },
+			{ datas: { className: 'wall right', width: thin, height: d.height, top: Math.floor(d.height / 2), left: 0, zIndex: 0 } }
+		]
+		for (let index = 0; index < 4; index++) {
+			let wall = document.createElement('div')
+			this.appliqueCaA(elements[index], wall)
+			this.walls.push(wall)
+			this.addToMap(wall)
+
+		}
+
+
+
+
+
+
 	}
 	setMapSpawnZones() {
 		// player spawns

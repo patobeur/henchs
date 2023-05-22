@@ -81,11 +81,11 @@ const DATAZ = {
 				// }
 			],
 			walls: [
-				{ datas: { className: 'wall w1', width: 500, height: 4, top: 2, left: 250, zIndex: 0 } },
-				{ datas: { className: 'wall', width: 500, height: 4, top: 498, left: 250, zIndex: 0 } },
+				// { datas: { className: 'wall w1', width: 500, height: 4, top: 2, left: 250, zIndex: 0 } },
+				// { datas: { className: 'wall', width: 500, height: 4, top: 498, left: 250, zIndex: 0 } },
 
-				{ datas: { className: 'wall', width: 4, height: 500, top: 250, left: 2, zIndex: 0 } },
-				{ datas: { className: 'wall', width: 4, height: 500, top: 250, left: 498, zIndex: 0 } },
+				// { datas: { className: 'wall', width: 4, height: 500, top: 250, left: 2, zIndex: 0 } },
+				// { datas: { className: 'wall', width: 4, height: 500, top: 250, left: 498, zIndex: 0 } },
 
 				{ datas: { className: 'wall', width: 50, height: 50, top: 250, left: 250, zIndex: 0 } },
 			]
