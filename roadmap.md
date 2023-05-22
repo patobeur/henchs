@@ -30,6 +30,21 @@
  - [x] (added to setMapWalls() in MapsManager.js )
 
 
+## 6 - Add functional spawn ( B teleport to A or C )
+ - [ ] (check distance form center of 'Spawn Object' and 'Ghost Object')
+
+## 7 - Add stuff library
+ - [ ] (add class)
+ - [ ] (add inventory)
+
+
+## 7 - Add henchs library
+ - [ ] (add class)
+ - [ ] (add csv)
+
+## 7 - Add Skills
+ - [ ] (add class)
+ - [ ] (add csv)
 
 
 # 💊 TO DO
@@ -38,8 +53,9 @@
 
  - [ ] screen resize broke ux 
  - [ ] collision not working 
- - [ ] what else
- - [ ] 
+ - [ ] what else...
+
+
 ## X - Adds 
 
  - [ ] 🔋 add statistics 

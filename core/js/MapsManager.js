@@ -24,6 +24,9 @@ class MapsManager {
 		this.displayGhostOnce()
 		document.body.appendChild(this.map)
 		this.refreshMapPos()
+		onresize = (event) => {
+			this.refreshMapPos()
+		};
 	}
 	update() {
 		if (Keyboard.isUsingMove()) {
@@ -149,7 +152,7 @@ class MapsManager {
 		}
 		console.log('f', this.mapsdatas.datas)
 		let d = this.mapsdatas.datas
-		let thin = 2
+		let thin = this.mapsdatas.wallThin
 		let elements = [
 			{ datas: { className: 'wall top', width: d.width, height: thin, top: 0, left: Math.floor(d.width / 2), zIndex: 0 } },
 			{ datas: { className: 'wall bottom', width: d.width, height: thin, top: d.height - 2, left: Math.floor(d.width / 2), zIndex: 0 } },
@@ -172,12 +175,24 @@ class MapsManager {
 	}
 	setMapSpawnZones() {
 		// player spawns
-		if (typeof this.mapsdatas.spawns[0] === 'object') {
+		// if (typeof this.mapsdatas.spawns[0] === 'object') {
+
+		// 	let spawn = document.createElement('div');
+		// 	this.appliqueCaA(this.mapsdatas.spawns[0], spawn, true)
+		// 	this.spawns.push(spawn)
+		// 	this.map.prepend(spawn)
+		// 	this.addToMap(spawn)
+
+
+		// }
+		for (let index = 0; index < this.mapsdatas.spawns.length; index++) {
+
 			let spawn = document.createElement('div');
-			this.appliqueCaA(this.mapsdatas.spawns[0], spawn, true)
+			this.appliqueCaA(this.mapsdatas.spawns[index], spawn, true)
 			this.spawns.push(spawn)
 			this.map.prepend(spawn)
 			this.addToMap(spawn)
+
 
 		}
 	}
@@ -204,9 +219,19 @@ class MapsManager {
 			if (typeof element.datas.width != 'undefined') target.style.width = element.datas.width + 'px';
 			if (typeof element.datas.height != 'undefined') target.style.height = element.datas.height + 'px';
 			if (typeof element.datas.transform != 'undefined') target.style.transform = 'rotate(' + element.datas.transform + 'deg)';
+			if (typeof element.datas.title != 'undefined') target.title = element.datas.title;
 
 			if (typeof element.datas.className != 'undefined') target.className = element.datas.className;
-			if (typeof element.datas.src != 'undefined') target.src = element.datas.src;
+			if (typeof element.datas.src != 'undefined' && element.tag === 'img') target.src = element.datas.src;
+
+			if (typeof element.datas.backgroundColor != 'undefined') target.style.backgroundColor = element.datas.backgroundColor;
+
+
+
+			// need secur
+			if (typeof element.datas.textContent != 'undefined') target.textContent = element.datas.textContent;
+
+
 		}
 		else {
 			console.log(element, target)
