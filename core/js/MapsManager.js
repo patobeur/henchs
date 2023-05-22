@@ -182,7 +182,7 @@ class MapsManager {
 		}
 	}
 	setMapStyle() {
-		// first spawn recenred on center of screen
+		// first spawn recentered on center of screen
 		let mapCurrentPosTop = (Math.floor(window.innerHeight / 2) + this.mapsdatas.datas.top - this.mapsdatas.spawns[0].datas.top - (this.mapsdatas.spawns[0].datas.height / 2))
 		let mapCurrentPosLeft = (Math.floor(window.innerWidth / 2) + this.mapsdatas.datas.left - this.mapsdatas.spawns[0].datas.left - (this.mapsdatas.spawns[0].datas.width / 2))
 		this.map.style.top = mapCurrentPosTop + 'px'
