@@ -38,11 +38,11 @@
  - [ ] (add inventory)
 
 
-## 7 - Add henchs library
+## 8 - Add henchs library
  - [ ] (add class)
  - [ ] (add csv)
 
-## 7 - Add Skills
+## 9 - Add Skills
  - [ ] (add class)
  - [ ] (add csv)
 
