@@ -43,3 +43,22 @@
  - [ ] 🔋 add statistics 
  - [ ] 📖 add rules 
  - [ ] ❤️ add life ;)
+
+
+# 🎠 Tests
+
+## Transform Manager
+
+	\testing\transform\index.html
+	\testing\transform\sommetmanager.js
+	\testing\transform\style.css
+ - [x] testing : get coords of wall (object) vertices if transform rotation detected on wall (object)
+ - [ ] still not working (diagonals are bad)
+ - [x] still not working ...
+ - [ ] ..
+
+## Get a function that return if two object (rotated or not) are colliding
+
+ - [x] testing : test ghosts position with all object in the map 
+	-  for( i to walls.length) { let collide = checkCollision(ghostElement,walls[i]) }
+ - [ ] Omw ...

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr_FR">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta property="og:title" content="Functions JS">
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="http://www.mywebpage.fr">
+		<meta property="og:site_name" content="Functions JS">
+		<meta charset="utf-8">
+		<title>Function JS</title>
+		<link rel="stylesheet" href="./style.css">
+		<script src="./sommetmanager.js"></script>
+		<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	</head>
+
+	<body>
+		<div class="map" id="map">
+			<div class="square" id="square"
+				style="top: 10px; left: 10px; width: 50px; height: 50px; transform: rotate(22deg);"></div>
+		</div>
+		<script>
+			// create carre
+			let rotationRate = 99 // %
+			let nbCarre = 10
+			let container = document.getElementById('map')
+			let containerBCR = container.getBoundingClientRect()
+			let carre = { width: 50, height: 50, border: 0 }
+			for (let index = 0; index < nbCarre; index++) {
+				let divCarre = document.createElement('div');
+				divCarre.className = 'carre';
+				let min = 0
+				let left = Math.floor(Math.random() * (containerBCR.width - (carre.width / 2) - min + 1) + min);
+				let top = Math.floor(Math.random() * (containerBCR.height - (carre.height / 2) - min + 1) + min);
+				divCarre.style.top = top + 'px'
+				divCarre.style.left = left + 'px'
+				divCarre.style.width = carre.width + 'px'
+				divCarre.style.height = carre.height + 'px'
+
+				let rotated = Math.floor(Math.random() * (100) + 1) <= rotationRate ? true : false;
+				if (rotated === true) {
+					divCarre.style.transform = "rotate(" + Math.floor(Math.random() * 360) + "deg)";
+					divCarre.classList.add('rotated')
+					divCarre.id = 'carre_' + index
+				}
+				else {
+				}
+				container.appendChild(divCarre);
+			}
+
+			// Utilisation de la classe avec l'élément 'carre'
+			const sommetsManager = new SommetsManager();
+			let datas = sommetsManager.start('carre', 'map', false, true)
+			console.log('datas:', datas)
+
+			let square = document.getElementById('square')
+			sommetsManager.setElementCoords(square)
+
+		</script>
+	</body>
+
+</html>
