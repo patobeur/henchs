@@ -31,7 +31,6 @@ class MapsManager {
 	update() {
 		if (Keyboard.isUsingMove()) {
 			this.checkMoveRules()
-			// console.log('isCollidingWithWalls:', this.isCollidingWithWalls(this.ghostDatas[0].div))
 			this.refreshMapPos()
 		}
 	}
@@ -64,9 +63,14 @@ class MapsManager {
 		this.ghostDatas[0].div.style.top = (this.ghostDatas[0].datas.top - (this.ghostDatas[0].datas.height / 2)) + 'px'
 		this.ghostDatas[0].div.style.left = (this.ghostDatas[0].datas.left - (this.ghostDatas[0].datas.width / 2)) + 'px'
 
-		let iscolliding = this.isCollidingWithWalls(this.ghostDatas[0].div)
+		// check collisions
+		// let isCollidingWalls = this.isCollidingWithWalls(this.ghostDatas[0].div)
 
-		if (iscolliding) {
+		let elem = this.ghostDatas[0].div
+		let list = this.walls
+
+		if (Collisions.isCollidingWithWalls(elem, list)) {
+
 			// restore old position back if colliding
 			this.ghostDatas[0].datas.top = oldTop
 			this.ghostDatas[0].datas.left = oldLeft
@@ -74,6 +78,12 @@ class MapsManager {
 			// update ghost div position to get bouncing box
 			// this.ghostDatas[0].div.style.top = (this.ghostDatas[0].datas.top - (this.ghostDatas[0].datas.height / 2)) + 'px'
 			// this.ghostDatas[0].div.style.left = (this.ghostDatas[0].datas.left - (this.ghostDatas[0].datas.width / 2)) + 'px'
+		}
+		else {
+			// DotTrailer
+			//DotsTrailer.dotManager(this.ghostDatas[0].div)
+
+			// update player pos
 		}
 
 

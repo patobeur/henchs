@@ -11,6 +11,9 @@ class GAME {
 			// Players.setPlayerInitialPos()
 			// Players.addToBody()
 			Maps.start();
+			// TrailDotsManager
+
+			// console.log(Maps.grid)
 
 			// Players.players[Players.currentNumPlayer].adddots()
 			this.run()
@@ -49,6 +52,7 @@ class GAME {
 }
 
 const Algebra = new Algebras()
+const Collisions = new CollisionsManager()
 const DotsTrailer = new TrailDotsManager()
 // const Players = new PlayerManager();
 // const Henchs = new HenchsManager()

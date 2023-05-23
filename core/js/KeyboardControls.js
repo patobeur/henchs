@@ -2,6 +2,7 @@ class KeyboardControls {
 	constructor() {
 		this.way = [false, false, false, false]; // haut, droite, bas, gauche
 		this.skills = [false];
+		this.options = [false];
 
 		this.handleKeyDown = this.handleKeyDown.bind(this);
 		this.handleKeyUp = this.handleKeyUp.bind(this);
@@ -31,6 +32,9 @@ class KeyboardControls {
 			case "q":
 				this.way[3] = true;
 				break;
+			case "o":
+				this.options[0] = true;
+				break;
 		}
 	}
 
@@ -55,6 +59,9 @@ class KeyboardControls {
 			case "q":
 				this.way[3] = false;
 				break;
+			case "o":
+				this.options[0] = false;
+				break;
 		}
 	}
 
@@ -63,11 +70,24 @@ class KeyboardControls {
 		document.removeEventListener("keyup", this.handleKeyUp);
 	}
 
-
+	isUsing(name) {
+		let result = false;
+		for (let i = 0; i < this[name].length; i++) {
+			if (this[name][i] === true) { result = true }
+		}
+		return result
+	}
 	isUsingSkills() {
-		let result = false; let nItems = this.skills.length;
-		for (let i = 0; i < nItems; i++) {
-			if (this.nItems[i] === true) { result = true }
+		let result = false;
+		for (let i = 0; i < this.skills.length; i++) {
+			if (this.skills[i] === true) { result = true }
+		}
+		return result
+	}
+	isUsingOptions() {
+		let result = false;
+		for (let i = 0; i < this.options.length; i++) {
+			if (this.options[i] === true) { result = true }
 		}
 		return result
 	}
