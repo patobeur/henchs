@@ -106,20 +106,20 @@ class MapsManager {
 	}
 	setAndDisplayGhost() {
 		// player ghost
-		if (typeof this.ghostDatas[num] === 'object') {
+		if (typeof this.ghostDatas[this.ghostNum] === 'object') {
 
 			if (typeof this.mapsdatas.spawns[0] === 'object') {
-				this.ghostDatas[num].datas.left = this.mapsdatas.spawns[0].datas.left
-				this.ghostDatas[num].datas.top = this.mapsdatas.spawns[0].datas.top
+				this.ghostDatas[this.ghostNum].datas.left = this.mapsdatas.spawns[0].datas.left
+				this.ghostDatas[this.ghostNum].datas.top = this.mapsdatas.spawns[0].datas.top
 			}
-			this.ghostDatas[num].div = document.createElement('div');
+			this.ghostDatas[this.ghostNum].div = document.createElement('div');
 			// apply properties
-			this.appliqueCaA(this.ghostDatas[num], this.ghostDatas[num].div, true)
-			this.addToMap(this.ghostDatas[num].div)
+			this.appliqueCaA(this.ghostDatas[this.ghostNum], this.ghostDatas[this.ghostNum].div, true)
+			this.addToMap(this.ghostDatas[this.ghostNum].div)
 
 			// update player pos
-			this.player.datas.top = this.ghostDatas[num].datas.top
-			this.player.datas.left = this.ghostDatas[num].datas.left
+			this.player.datas.top = this.ghostDatas[this.ghostNum].datas.top
+			this.player.datas.left = this.ghostDatas[this.ghostNum].datas.left
 
 		}
 
