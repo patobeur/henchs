@@ -1,10 +1,7 @@
 class TrailDotsManager {
 	constructor() {
-<<<<<<< HEAD
 		this.allDots = []
-=======
 		this.ghost = Object
->>>>>>> main
 	}
 	dotManager(ghost) {
 		console.log('fffffffffff')
