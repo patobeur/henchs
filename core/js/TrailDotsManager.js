@@ -1,6 +1,6 @@
 class TrailDotsManager {
 	constructor() {
-		this.dots = Object
+		this.allDots = []
 	}
 	dotManager() {
 		this.dots.adddots = () => {

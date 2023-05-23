@@ -1,5 +1,6 @@
 class MapsManager {
 	constructor() {
+		this.ghostNum = new Number(0)
 		this.diagonalspeedratio = 1.5;
 		this.grid = { x: 100, y: 100, z: 100 }
 
@@ -21,9 +22,12 @@ class MapsManager {
 		this.setMapParts()
 		this.setMapWalls()
 		this.setMapStyle()
-		this.displayGhostOnce()
+		this.setAndDisplayGhost()
 		document.body.appendChild(this.map)
 		this.refreshMapPos()
+		this.setOnresize()
+	}
+	setOnresize() {
 		onresize = (event) => {
 			this.refreshMapPos()
 		};
@@ -31,49 +35,52 @@ class MapsManager {
 	update() {
 		if (Keyboard.isUsingMove()) {
 			this.checkMoveRules()
-			// console.log('isCollidingWithWalls:', this.isCollidingWithWalls(this.ghostDatas[0].div))
+			// console.log('isCollidingWithWalls:', this.isCollidingWithWalls(this.ghostDatas[this.ghostNum].div))
+			this.refreshDots()
 			this.refreshMapPos()
 		}
+	}
+	refreshDots() {
 	}
 	checkMoveRules() {
 
 		let way = Keyboard.way;
-		let speed = this.ghostDatas[0].speed;
+		let speed = this.ghostDatas[this.ghostNum].speed;
 
 		//get current grid 
-		this.ghostDatas[0].grid = this.getCurrentGridPos(this.ghostDatas[0].datas);
+		this.ghostDatas[this.ghostNum].grid = this.getCurrentGridPos(this.ghostDatas[this.ghostNum].datas);
 
 		// 	adjust speed while diagonal move
 		if ((way[0] || way[2]) && (way[1] || way[3])) { speed = Math.floor(speed / this.diagonalspeedratio); }
 
 		// update theta direction (rotation)
-		this.ghostDatas[0].theta = way[0] ? 0 : way[1] ? 90 : way[2] ? 180 : 270;
+		this.ghostDatas[this.ghostNum].theta = way[0] ? 0 : way[1] ? 90 : way[2] ? 180 : 270;
 
 		// store old position
-		let oldTop = Number(this.ghostDatas[0].datas.top) + 0;
-		let oldLeft = Number(this.ghostDatas[0].datas.left) + 0;
+		let oldTop = Number(this.ghostDatas[this.ghostNum].datas.top) + 0;
+		let oldLeft = Number(this.ghostDatas[this.ghostNum].datas.left) + 0;
 
 		// adjust speed if diagonal moove
-		if (way[0] && !way[2]) { this.ghostDatas[0].datas.top -= speed; }
-		if (way[2] && !way[0]) { this.ghostDatas[0].datas.top += speed; }
-		if (way[1] && !way[3]) { this.ghostDatas[0].datas.left += speed; }
-		if (way[3] && !way[1]) { this.ghostDatas[0].datas.left -= speed; }
+		if (way[0] && !way[2]) { this.ghostDatas[this.ghostNum].datas.top -= speed; }
+		if (way[2] && !way[0]) { this.ghostDatas[this.ghostNum].datas.top += speed; }
+		if (way[1] && !way[3]) { this.ghostDatas[this.ghostNum].datas.left += speed; }
+		if (way[3] && !way[1]) { this.ghostDatas[this.ghostNum].datas.left -= speed; }
 
 
 		// update ghost div position to get bouncing box
-		this.ghostDatas[0].div.style.top = (this.ghostDatas[0].datas.top - (this.ghostDatas[0].datas.height / 2)) + 'px'
-		this.ghostDatas[0].div.style.left = (this.ghostDatas[0].datas.left - (this.ghostDatas[0].datas.width / 2)) + 'px'
+		this.ghostDatas[this.ghostNum].div.style.top = (this.ghostDatas[this.ghostNum].datas.top - (this.ghostDatas[this.ghostNum].datas.height / 2)) + 'px'
+		this.ghostDatas[this.ghostNum].div.style.left = (this.ghostDatas[this.ghostNum].datas.left - (this.ghostDatas[this.ghostNum].datas.width / 2)) + 'px'
 
-		let iscolliding = this.isCollidingWithWalls(this.ghostDatas[0].div)
+		let iscolliding = this.isCollidingWithWalls(this.ghostDatas[this.ghostNum].div)
 
 		if (iscolliding) {
 			// restore old position back if colliding
-			this.ghostDatas[0].datas.top = oldTop
-			this.ghostDatas[0].datas.left = oldLeft
+			this.ghostDatas[this.ghostNum].datas.top = oldTop
+			this.ghostDatas[this.ghostNum].datas.left = oldLeft
 
 			// update ghost div position to get bouncing box
-			// this.ghostDatas[0].div.style.top = (this.ghostDatas[0].datas.top - (this.ghostDatas[0].datas.height / 2)) + 'px'
-			// this.ghostDatas[0].div.style.left = (this.ghostDatas[0].datas.left - (this.ghostDatas[0].datas.width / 2)) + 'px'
+			// this.ghostDatas[this.ghostNum].div.style.top = (this.ghostDatas[this.ghostNum].datas.top - (this.ghostDatas[this.ghostNum].datas.height / 2)) + 'px'
+			// this.ghostDatas[this.ghostNum].div.style.left = (this.ghostDatas[this.ghostNum].datas.left - (this.ghostDatas[this.ghostNum].datas.width / 2)) + 'px'
 		}
 
 
@@ -93,27 +100,26 @@ class MapsManager {
 	}
 	refreshMapPos() {
 		if (typeof this.map != 'undefined') {
-			this.map.style.top = (Math.floor(window.innerHeight / 2) + this.mapsdatas.datas.top - this.ghostDatas[0].datas.top) + 'px'
-			this.map.style.left = (Math.floor(window.innerWidth / 2) + this.mapsdatas.datas.left - this.ghostDatas[0].datas.left) + 'px'
+			this.map.style.top = (Math.floor(window.innerHeight / 2) + this.mapsdatas.datas.top - this.ghostDatas[this.ghostNum].datas.top) + 'px'
+			this.map.style.left = (Math.floor(window.innerWidth / 2) + this.mapsdatas.datas.left - this.ghostDatas[this.ghostNum].datas.left) + 'px'
 		}
 	}
-	displayGhostOnce() {
-
+	setAndDisplayGhost() {
 		// player ghost
-		if (typeof this.ghostDatas[0] === 'object') {
+		if (typeof this.ghostDatas[num] === 'object') {
 
 			if (typeof this.mapsdatas.spawns[0] === 'object') {
-				this.ghostDatas[0].datas.left = this.mapsdatas.spawns[0].datas.left
-				this.ghostDatas[0].datas.top = this.mapsdatas.spawns[0].datas.top
+				this.ghostDatas[num].datas.left = this.mapsdatas.spawns[0].datas.left
+				this.ghostDatas[num].datas.top = this.mapsdatas.spawns[0].datas.top
 			}
-			this.ghostDatas[0].div = document.createElement('div');
+			this.ghostDatas[num].div = document.createElement('div');
 			// apply properties
-			this.appliqueCaA(this.ghostDatas[0], this.ghostDatas[0].div, true)
-			this.addToMap(this.ghostDatas[0].div)
+			this.appliqueCaA(this.ghostDatas[num], this.ghostDatas[num].div, true)
+			this.addToMap(this.ghostDatas[num].div)
 
 			// update player pos
-			this.player.datas.top = this.ghostDatas[0].datas.top
-			this.player.datas.left = this.ghostDatas[0].datas.left
+			this.player.datas.top = this.ghostDatas[num].datas.top
+			this.player.datas.left = this.ghostDatas[num].datas.left
 
 		}
 

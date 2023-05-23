@@ -43,6 +43,7 @@ class GAME {
 			// Players.update();
 			// Henchs.update();
 			Maps.update()
+			
 		}
 		//else this.isTheEnd()
 	}
