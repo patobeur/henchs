@@ -12,7 +12,10 @@ class GAME {
 			// Players.addToBody()
 			Maps.start();
 			// TrailDotsManager
-
+			DotsTrailer.dotManager(Maps.ghostDatas)
+			console.log(
+				Maps.ghostDatas[0])
+				Maps.ghostDatas[0].trail.addTrailDot();
 			// console.log(Maps.grid)
 
 			// Players.players[Players.currentNumPlayer].adddots()
