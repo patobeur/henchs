@@ -12,7 +12,8 @@ class GAME {
 			// Players.addToBody()
 			Maps.start();
 			// TrailDotsManager
-			DotsTrailer.addTrail(Maps.ghostDatas);
+			Inventory.start();
+			DotsTrailer.start(Maps.ghostDatas);
 			// Maps.ghostDatas[0].trail.addTrailDot();
 			// Players.players[Players.currentNumPlayer].adddots()
 			this.run()
@@ -46,17 +47,18 @@ class GAME {
 			// Henchs.update();
 			// Maps.ghostDatas[0].trail.addTrailDot();
 			Maps.update()
-			
+
 		}
 		//else this.isTheEnd()
 	}
 }
 
 const Algebra = new Algebras()
-const Collisions = new CollisionsManager()
-const DotsTrailer = new TrailDotsManager()
 // const Players = new PlayerManager();
 // const Henchs = new HenchsManager()
+const Inventory = new InventoryManager()
+const Collisions = new CollisionsManager()
+const DotsTrailer = new TrailDotsManager()
 const Maps = new MapsManager()
 const Keyboard = new KeyboardControls()
 const Game = new GAME();

@@ -163,7 +163,7 @@ class MapsManager {
 				}
 			});
 		}
-		console.log('f', this.mapsdatas.datas)
+		// console.log('f', this.mapsdatas.datas)
 		let d = this.mapsdatas.datas
 		let thin = this.mapsdatas.wallThin
 		let elements = [

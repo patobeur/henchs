@@ -1,12 +1,13 @@
 class TrailDotsManager {
 	constructor() {
 	}
-	addTrail=(ghostDatas)=>{
+	start = (ghostDatas) => {
+		console.log('TrailDots Manager ok ...')
 		this.ghostDatas = ghostDatas[0]
-		this.ghostDatas.trail={
+		this.ghostDatas.trail = {
 			allDots: [],
 			dotDist: 0,
-			maxDotsDist:20,
+			maxDotsDist: 20,
 			adddots: () => {
 				let div = document.createElement('div')
 				div.className = "dot"
@@ -34,7 +35,7 @@ class TrailDotsManager {
 					}, 5000);
 				}, 500);
 			},
-			addTrailDot:() => {
+			addTrailDot: () => {
 				if (this.ghostDatas.trail.dotDist > this.ghostDatas.trail.maxDotsDist) {
 					this.ghostDatas.trail.adddots()
 					this.ghostDatas.trail.dotDist = 0
