@@ -36,7 +36,7 @@ class MapsManager {
 		if (Keyboard.isUsingMove()) {
 			this.checkMoveRules()
 			// console.log('isCollidingWithWalls:', this.isCollidingWithWalls(this.ghostDatas[this.ghostNum].div))
-			this.refreshDots()
+			// this.refreshDots()
 			this.refreshMapPos()
 		}
 	}
@@ -86,9 +86,7 @@ class MapsManager {
 			// this.ghostDatas[this.ghostNum].div.style.left = (this.ghostDatas[this.ghostNum].datas.left - (this.ghostDatas[this.ghostNum].datas.width / 2)) + 'px'
 		}
 		else {
-			// DotTrailer
-			//DotsTrailer.dotManager(this.ghostDatas[0].div)
-
+			this.ghostDatas[this.ghostNum].trail.addTrailDot();
 			// update player pos
 		}
 

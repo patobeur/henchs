@@ -12,12 +12,8 @@ class GAME {
 			// Players.addToBody()
 			Maps.start();
 			// TrailDotsManager
-			DotsTrailer.dotManager(Maps.ghostDatas)
-			console.log(
-				Maps.ghostDatas[0])
-				Maps.ghostDatas[0].trail.addTrailDot();
-			// console.log(Maps.grid)
-
+			DotsTrailer.addTrail(Maps.ghostDatas);
+			// Maps.ghostDatas[0].trail.addTrailDot();
 			// Players.players[Players.currentNumPlayer].adddots()
 			this.run()
 		}
@@ -48,6 +44,7 @@ class GAME {
 		if (this.errors.length === 0) {
 			// Players.update();
 			// Henchs.update();
+			// Maps.ghostDatas[0].trail.addTrailDot();
 			Maps.update()
 			
 		}
