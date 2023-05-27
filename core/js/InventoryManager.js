@@ -4,43 +4,43 @@ class InventoryManager {
 		this.mess = []
 	}
 	start() {
-		CLOG.add(this.constructor.name,'started');
-	
+		CLOG.add(this.constructor.name, 'started');
+
 		// console.log('Inventory Manager started...')
 		this.creatDivs()
 	}
-	creatDivs(){
+	creatDivs() {
 		this.invent = document.createElement('div')
 		this.invent.id = 'inventory'
 		// Div
-		
+
 		// console.log('Divs Manager started...')
-        this.allBags = Divs.createEle({
-			tag:'div',
+		this.allBags = Divs.createEle({
+			tag: 'div',
 			id: 'inventory',
 			position: "absolute",
-			width: 50+ 'px',
-			height: 60+ 'px',
+			width: 50 + 'px',
+			height: 60 + 'px',
 			// top: new Number(0),
 			// left: new Number(0),
 			// right: new Number(0),
 			bottom: new Number(0),
-            textContent:"🎒",
-			backgroundColor:'rgba(255,255,255,1)'
+			textContent: "🎒",
+			backgroundColor: 'rgba(255,255,255,1)'
 			// borderRadius: "1rem",
 			// overflow: "hidden"
 		})
-        Divs.addTo(this.allBags,false)
+		Divs.addTo(this.allBags, false)
 		this.addCats()
 
 	}
-	addCats(){
+	addCats() {
 		this.cats = Divs.createEle({
-			tag:'div',
+			tag: 'div',
 			id: 'cats',
-			backgroundColor:'rgba(255,66,255,1)',
+			backgroundColor: 'rgba(255,66,255,1)',
 		})
-        Divs.addTo(this.cats,this.allBags)
+		Divs.addTo(this.cats, this.allBags)
 
 	}
 	addStock(obj) {
@@ -50,14 +50,17 @@ class InventoryManager {
 			this.refresh()
 		}
 	}
-	refresh(){
+	refresh() {
 		this.cats.remove()
 		this.addCats()
-		
+
 		for (const key in this.stock) {
-			this.stock[key].forEach(elem=>{this.log(key+':'+elem)})
+			this.stock[key].forEach(elem => {
+				console.log.log(key + ':')
+				console.log.log(elem)
+			})
 		}
-	
+
 		// this.stock.forEach(element => {
 		// 	console.log('jj:',element)
 		// });

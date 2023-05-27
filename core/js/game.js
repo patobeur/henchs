@@ -15,7 +15,10 @@ class GAME {
 		DotsTrailer.start(Maps.ghostDatas);
 		// Maps.ghostDatas[0].trail.addTrailDot();
 		// Players.players[Players.currentNumPlayer].adddots()
-		// Inventory.add()
+		Inventory.addStock({
+			type: 'item',
+			cat: 'item'
+		})
 
 		this.run()
 	}
