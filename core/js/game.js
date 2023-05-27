@@ -6,21 +6,21 @@ class GAME {
 		this.starter = true;
 	}
 	start() {
-			Divs.start();
-			// Players.setPlayerInitialPos()
-			// Players.addToBody()
-			Maps.start();
-			// TrailDotsManager
-			Inventory.start();
-			DotsTrailer.start(Maps.ghostDatas);
-			// Maps.ghostDatas[0].trail.addTrailDot();
-			// Players.players[Players.currentNumPlayer].adddots()
-			Inventory.add()
+		Divs.start();
+		// Players.setPlayerInitialPos()
+		// Players.addToBody()
+		Maps.start();
+		// TrailDotsManager
+		Inventory.start();
+		DotsTrailer.start(Maps.ghostDatas);
+		// Maps.ghostDatas[0].trail.addTrailDot();
+		// Players.players[Players.currentNumPlayer].adddots()
+		// Inventory.add()
 
-			this.run()
+		this.run()
 	}
-	run(run=true) {
-		if(run===false)this.timeout = false;
+	run(run = true) {
+		if (run === false) this.timeout = false;
 		setInterval(() => {
 			this.update()
 		}, this.timeout);
