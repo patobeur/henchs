@@ -9,10 +9,7 @@ class KeyboardControls {
 
 		document.addEventListener("keydown", this.handleKeyDown);
 		document.addEventListener("keyup", this.handleKeyUp);
-
-		console.log('KeyboardControls Manager ok...')
 	}
-
 	handleKeyDown(event) {
 		switch (event.key) {
 			case "k":

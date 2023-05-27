@@ -1,4 +1,4 @@
-class Algebras {
+class AlgebrasManager {
 	constructor() {
 	}
 	calculerRayon(w, h) {

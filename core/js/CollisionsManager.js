@@ -1,13 +1,12 @@
 class CollisionsManager {
 	constructor() {
 		this.withWalls = false;
-		console.log('Collisions Manager ok...')
 	}
 	isCollidingWithWalls(elem, list) {
 		this.withWalls = false
 		list.forEach(item => {
 			if (this.withWalls === false && this.isOverlapping(elem, item) === true) {
-				console.log('colll')
+				console.log('Aie ')
 				this.withWalls = true;
 			}
 		});

@@ -3,11 +3,10 @@ class GAME {
 		this.version = 0.1
 		this.errors = []
 		this.timeout = 10
-
+		this.starter = true;
 	}
 	start() {
-		this.checkErrors()
-		if (this.errors.length === 0) {
+			Divs.start();
 			// Players.setPlayerInitialPos()
 			// Players.addToBody()
 			Maps.start();
@@ -16,54 +15,39 @@ class GAME {
 			DotsTrailer.start(Maps.ghostDatas);
 			// Maps.ghostDatas[0].trail.addTrailDot();
 			// Players.players[Players.currentNumPlayer].adddots()
+			Inventory.add()
+
 			this.run()
-		}
-		else this.isTheEnd()
 	}
-	run() {
+	run(run=true) {
+		if(run===false)this.timeout = false;
 		setInterval(() => {
 			this.update()
 		}, this.timeout);
 	}
-	stop() {
-		this.timeout = 0
-		this.run()
-	}
 	checkErrors() {
-		// if (typeof Players === 'undefined') { this.errors.push('Class Players : Requis...') }
-		if (typeof Algebras === 'undefined') { this.errors.push('Class Algebra : Requis...') }
-		if (typeof Maps === 'undefined') { this.errors.push('Class Maps : Requis...') }
-		if (typeof Keyboard === 'undefined') { this.errors.push('Class Keyboard : Requis...') }
 	}
 	isTheEnd() {
-		this.stop()
 		console.log('Capitaine ? on a un problème ici !');
 		console.table(this.errors);
 	}
 	update() {
-		// console.log('updating')
-		if (this.errors.length === 0) {
-			// Players.update();
-			// Henchs.update();
-			// Maps.ghostDatas[0].trail.addTrailDot();
-			Maps.update()
-
-		}
-		//else this.isTheEnd()
+		Maps.update()
 	}
 }
-
-const Algebra = new Algebras()
+const CLOG = new ConsoleLog()
+const Algebra = new AlgebrasManager()
 // const Players = new PlayerManager();
 // const Henchs = new HenchsManager()
 const Inventory = new InventoryManager()
+const Divs = new DivsManager()
 const Collisions = new CollisionsManager()
 const DotsTrailer = new TrailDotsManager()
 const Maps = new MapsManager()
 const Keyboard = new KeyboardControls()
 const Game = new GAME();
-
 window.onload = () => {
 	Game.start()
-
+	CLOG.display('whatever')
+	// Game.run(false)
 }

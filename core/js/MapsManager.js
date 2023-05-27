@@ -68,14 +68,18 @@ class MapsManager {
 
 
 		// update ghost div position to get bouncing box
-		this.ghostDatas[this.ghostNum].div.style.top = (this.ghostDatas[this.ghostNum].datas.top - (this.ghostDatas[this.ghostNum].datas.height / 2)) + 'px'
-		this.ghostDatas[this.ghostNum].div.style.left = (this.ghostDatas[this.ghostNum].datas.left - (this.ghostDatas[this.ghostNum].datas.width / 2)) + 'px'
+		let nextTop = (this.ghostDatas[this.ghostNum].datas.top - (this.ghostDatas[this.ghostNum].datas.height / 2))
+		let nextLeft = (this.ghostDatas[this.ghostNum].datas.left - (this.ghostDatas[this.ghostNum].datas.width / 2))
+
+		this.ghostDatas[this.ghostNum].div.style.top = nextTop + 'px'
+		this.ghostDatas[this.ghostNum].div.style.left = nextLeft + 'px'
 
 
 		let elem = this.ghostDatas[0].div
 		let list = this.walls
+		this.player.iscolliding = Collisions.isCollidingWithWalls(elem, list);
 
-		if (Collisions.isCollidingWithWalls(elem, list)) {
+		if (this.player.iscolliding) {
 
 			// restore old position back if colliding
 			this.ghostDatas[this.ghostNum].datas.top = oldTop
@@ -88,6 +92,8 @@ class MapsManager {
 		else {
 			this.ghostDatas[this.ghostNum].trail.addTrailDot();
 			// update player pos
+			this.player.datas.top = nextTop
+			this.player.datas.left = nextLeft
 		}
 
 
