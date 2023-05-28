@@ -56,8 +56,8 @@ class InventoryManager {
 
 		for (const key in this.stock) {
 			this.stock[key].forEach(elem => {
-				console.log.log(key + ':')
-				console.log.log(elem)
+				console.log(key + ':')
+				console.log(elem)
 			})
 		}
 
