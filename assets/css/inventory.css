@@ -1,0 +1,100 @@
+
+.tools {
+	position: absolute;
+	right:5px;
+	bottom:5px;
+	/* min-width:42px;
+	min-height:42px; */
+	/* width:42px;
+	height:42px; */
+	max-width: 42px;
+	max-height: 80%;
+	padding:5px;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	background-color: white;
+	border: 1px solid Black;
+	}
+	.tools .catcontainer{
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	width: 32px;
+	height: 32px;
+	display: none;
+	}
+	.icone{
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	min-width: 32px;
+	min-height: 32px;
+	font-size: 1.2rem;
+	content:""
+	}
+	.tools .icone{
+	background-color: rgb(16, 159, 37);
+	border: 1px solid Black;
+	border-radius: 7px;
+	}
+	.catcontainer {
+	display: none;
+	min-width:32px;
+	min-height:32px;
+	max-width:32px;
+	background-color:green;
+	display: flex;
+	flex-direction: column;
+	justify-content: end;
+	}
+	.tools .catcontainer .icone{
+	background-color: rgba(7, 72, 17, 0.475);
+	border: 1px solid rgba(203, 44, 44, 0.404);
+	}
+	.tools .catcontainer.invent .icone{
+	background-color: rgb(15, 26, 186);
+	border: 1px solid rgb(44, 203, 60);
+	}
+	.tools .catcontainer.books .icone{
+	background-color: rgb(186, 15, 186);
+	border: 1px solid rgb(44, 203, 60);
+	}
+	.catcontainer .itemscontainer{
+	width:32px;
+	height:32px;
+	outline:1px solid pink;
+	display: none;
+	}
+
+
+	.tools:hover{
+	/* height: max-content; */
+		height: fit-content;
+		min-height: max-content;
+	}
+	.tools:hover .icone{
+		background-color: rgb(3, 3, 3);
+		display: none;
+	}
+	.tools:hover .catcontainer{
+		display: block;
+	}
+	.tools:hover .catcontainer .icone{
+		background-color: rgb(181, 17, 44);
+		display: block;
+	}  
+	
+	.tools .catcontainer:hover{
+	/* height: max-content; */
+		width: max-content;
+		display: block;
+		background-color: aqua;
+	} 
+	.tools .catcontainer:hover .itemscontainer{
+	/* height: max-content; */
+		width: fit-content;
+		min-width: max-content;
+		display: block;
+	} 
