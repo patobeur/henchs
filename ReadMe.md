@@ -53,6 +53,8 @@
 
  - [ ] screen resize broke ux 
  - [ ] collision not working 
+   - [x] adding test done
+   - [x] vertices seem to be ok to collision test
  - [ ] what else...
 
 
