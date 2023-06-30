@@ -1,119 +1,85 @@
-"use strict";
 class SommetsManager {
 	constructor() {
+		// this.setTargetContainerById('map')
 		this.AllItems = []
 		this.immat = new Number(0)
-		// this.elements = null
 		this.visual = {
-			border: 1,
-			rayon: 2,
+			border: 0,
+			width: 4,
+			height: 4,
 		}
+		this.error = false;
 	}
-	start(stringName, targetId, byid = false, display = false) {
-		this.id = targetId
-		this.target = document.getElementById(this.id)
-		let allElements = this.getAllElements(stringName, byid)
-		// this.initTarget(divId)
-
-
-
-		if (allElements) {
-			// if (typeof this.elements === 'object' && this.elements.length > 0) { }
-			for (let index = 0; index < this.elements.length; index++) {
-
-				this.AllItems[this.immat] = this.getNewItem(this.elements[index]);
-				this.setItemCoords(this.AllItems[this.immat])
-				if (display === true) this.afficheSommets(this.AllItems[this.immat]);
-				this.immat++;
-			}
-		}
-		return this.AllItems
-
+	setTargetContainerById(targetId) {
+		let tmpTarget = document.getElementById(targetId)
+		if (typeof tmpTarget === 'object') this.targetMap = tmpTarget;
+		this.targetMapRect = this.targetMap.getBoundingClientRect()
 	}
-	setElementCoords(element) {
+	setElementCoords(element, display = false) {
 		let item = this.getNewItem(element)
-		console.log(item)
 		this.setItemCoords(item)
-		this.afficheSommets(item);
-	}
-	initTarget(id) {
-		let targetTest = document.getElementById(id)
-		if (typeof targetTest === 'object') this.target = targetTest;
-	}
-	getAllElements(Name, byId) {
-		this.elements = !byId ? document.getElementsByClassName(Name) : document.getElementById(Name);
-		if (typeof this.elements === 'object' && this.elements.length > 0) {
-			return true
-		}
-		return false
+		if (display && item.rotate) this.afficheSommets(item);
+		return item.coords
 	}
 	getNewItem(element) {
 		let newItem = {
 			immat: this.immat,
 			element: element,
 			rect: element.getBoundingClientRect(),
-			coords: { topleft: { left: 0, top: 0 }, topright: { left: 0, top: 0 }, bottomleft: { left: 0, top: 0 }, bottomright: { left: 0, top: 0 } },
+			sizes: { w: element.offsetWidth, h: element.offsetHeight },
+			// purpose is here
+			coords: {
+				topleft: {
+					left: element.offsetLeft,
+					top: element.offsetTop
+				},
+				topright: {
+					left: element.offsetLeft + element.offsetWidth,
+					top: element.offsetTop
+				},
+				bottomleft: {
+					left: element.offsetLeft,
+					top: element.offsetTop + element.offsetHeight
+				},
+				bottomright: {
+					left: element.offsetLeft + element.offsetWidth,
+					top: element.offsetTop + element.offsetHeight
+				},
+				center: {
+					left: element.offsetLeft + (element.offsetWidth / 2),
+					top: element.offsetTop + (element.offsetHeight / 2)
+				}
+			},
 			rotate: false
 		}
 		var rotate = element.style.transform.match(/rotate\((\d+)(.+)\)/);
 		if (rotate) {
 			var [num, unit] = rotate.slice(1);
 			newItem.rotate = num
+			newItem.rotateUnit = unit
 		}
 		return newItem
 	}
 	setItemCoords(item) {
-		item.coords = {
-			topleft: { left: item.rect.left, top: item.rect.top },
-			topright: { left: item.rect.left + item.rect.width, top: item.rect.top },
-			bottomleft: { left: item.rect.left, top: item.rect.top + item.rect.height },
-			bottomright: { left: item.rect.left + item.rect.width, top: item.rect.top + item.rect.height },
-			center: { left: item.rect.left + (item.rect.width / 2), top: item.rect.top + (item.rect.height / 2) }
-		}
+		// apply rotation to vertices
 		if (item.rotate) {
-			// apply rotation to vertices
 			let v = ['topleft', 'topright', 'bottomleft', 'bottomright'] // vertices
 			for (let index = 0; index < v.length; index++) {
-
-
 				let dataName = v[index]
-
-				// Exemple d'utilisation de la fonction
-				var w = item.rect.width;  // largeur du carré
-				var h = item.rect.heigth;  // hauteur du carré
-				var Px = item.coords[dataName].left;  // Coordonnée x du point P
-				var Py = item.coords[dataName].top;  // Coordonnée y du point P
-				var Cx = item.coords['center'].left;  // Coordonnée x du centre C du cercle
-				var Cy = item.coords['center'].top;  // Coordonnée y du centre C du cercle
-				var R = Math.sqrt(w * w + h * h)
-				R = R.toFixed(2);    // Rayon du cercle
-				var rotate = item.rotate;  // Angle de rotation en degrés
-
-				var nextPosition = sommetsManager.rotatePoint(Px, Py, Cx, Cy, R, rotate);
-
+				var nextPosition = this.rotatePoint(
+					item.coords[dataName].left, // Coordonnée x du point P
+					item.coords[dataName].top, // Coordonnée y du point P
+					// purpose is here
+					item.coords['center'].left, // Coordonnée x du centre C du cercle
+					item.coords['center'].top, // Coordonnée y du centre C du cercle
+					item.rotate, // Angle de rotation en degrés
+				);
 				item.coords[dataName].left = nextPosition.x
 				item.coords[dataName].top = nextPosition.y
-
 			}
 		}
 	}
-	afficheSommets(item) {
-		// let item = this.AllItems[immat]
-		let divSommet = document.createElement('div');
-		let v = ['topleft', 'topright', 'bottomleft', 'bottomright', 'center'] // vertices
-		for (let index = 0; index < v.length; index++) {
-			let elem = divSommet.cloneNode();
-			elem.className = "vertice " + v[index];
-			elem.style.width = (this.visual.rayon * 2) + 'px';
-			elem.style.height = (this.visual.rayon * 2) + 'px';
-			elem.style.left = (item.coords[v[index]].left - this.visual.rayon - this.visual.border) + 'px';
-			elem.style.top = (item.coords[v[index]].top - this.visual.rayon - this.visual.border) + 'px';
-			//if (this.target) this.target.appendChild(elem);
-			//item.element.parentNode.appendChild(elem);
-			document.body.appendChild(elem);
-		}
-	}
-	rotatePoint(Px, Py, Cx, Cy, R, rotation) {
+	rotatePoint(Px, Py, Cx, Cy, rotation) {
 		// Convertit l'angle de rotation en radians
 		var angleRad = rotation * Math.PI / 180;
 		// Calcule les coordonnées du vecteur entre C et P
@@ -130,5 +96,46 @@ class SommetsManager {
 			x: newX,
 			y: newY
 		};
+	}
+	afficheSommets(item) {
+		let divSommet = document.createElement('div');
+		let v = ['topleft', 'topright', 'bottomleft', 'bottomright', 'center'] // vertices
+		for (let index = 0; index < v.length; index++) {
+
+			let elem = divSommet.cloneNode();
+			elem.className = "vertice " + v[index];
+			elem.style.width = ((this.visual.width)) + 'px';
+			elem.style.height = ((this.visual.height)) + 'px';
+			elem.style.left = (item.coords[v[index]].left - (this.visual.width / 2) - (this.visual.border)) + 'px';
+			elem.style.top = (item.coords[v[index]].top - (this.visual.height / 2) - (this.visual.border)) + 'px';
+			// if (v[index] === "center") elem.textContent = 'x'
+			if (this.targetMap) {
+				// this.targetMap.appendChild(elem);
+				item.element.insertAdjacentElement('afterend', elem);
+			}
+			else {
+				document.body.appendChild(elem);
+			}
+		}
+	}
+	// -------------------------------------	
+	hydrateItemsByClassName(ClassName, targetId, display = false) {
+		this.setTargetContainerById(targetId)
+		let purpose = []
+		let allElements = document.getElementsByClassName(ClassName)
+		if (allElements) {
+			if (typeof allElements === 'object' && allElements.length > 0) {
+				for (let index = 0; index < allElements.length; index++) {
+					purpose.push(this.setElementCoords(allElements[index], display))
+				}
+			}
+		}
+		console.log(purpose)
+	}
+	// -------------------------------------	
+	hydrateItemById(Id, targetId, display = false) {
+		this.setTargetContainerById(targetId)
+		let square = document.getElementById(Id)
+		console.log(this.setElementCoords(square, display))
 	}
 }

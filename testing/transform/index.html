@@ -19,20 +19,28 @@
 
 	<body>
 		<div class="map" id="map">
+			<!-- 
+			<div class="square2" id="square2"
+				style="top: 10px; left: 100px; width: 50px; height: 50px;transform: rotate(76deg);"></div> -->
 			<div class="square" id="square"
-				style="top: 10px; left: 10px; width: 50px; height: 50px; transform: rotate(22deg);"></div>
+				style="top: 10px; left: 10px; width: 50px; height: 50px; transform: rotate(5deg);"></div>
 		</div>
 		<script>
+
+
+
 			// create carre
-			let rotationRate = 99 // %
-			let nbCarre = 10
+			let rotationRate = 60 // %
+			// 
+			let nbCarre = 15
 			let container = document.getElementById('map')
 			let containerBCR = container.getBoundingClientRect()
-			let carre = { width: 50, height: 50, border: 0 }
+			let carre = { width: 50, height: 50, border: 0, className: 'carre' }
+			let min = 0
 			for (let index = 0; index < nbCarre; index++) {
 				let divCarre = document.createElement('div');
-				divCarre.className = 'carre';
-				let min = 0
+				// divCarre.id = 'carre_' + index
+				divCarre.className = carre.className;
 				let left = Math.floor(Math.random() * (containerBCR.width - (carre.width / 2) - min + 1) + min);
 				let top = Math.floor(Math.random() * (containerBCR.height - (carre.height / 2) - min + 1) + min);
 				divCarre.style.top = top + 'px'
@@ -40,24 +48,18 @@
 				divCarre.style.width = carre.width + 'px'
 				divCarre.style.height = carre.height + 'px'
 
-				let rotated = Math.floor(Math.random() * (100) + 1) <= rotationRate ? true : false;
-				if (rotated === true) {
+				if (Math.floor(Math.random() * (100) + 1) <= rotationRate) {
 					divCarre.style.transform = "rotate(" + Math.floor(Math.random() * 360) + "deg)";
 					divCarre.classList.add('rotated')
-					divCarre.id = 'carre_' + index
-				}
-				else {
 				}
 				container.appendChild(divCarre);
 			}
 
 			// Utilisation de la classe avec l'élément 'carre'
 			const sommetsManager = new SommetsManager();
-			let datas = sommetsManager.start('carre', 'map', false, true)
-			console.log('datas:', datas)
 
-			let square = document.getElementById('square')
-			sommetsManager.setElementCoords(square)
+			sommetsManager.hydrateItemsByClassName('carre', 'map', true)
+			sommetsManager.hydrateItemById('square', 'map', true)
 
 		</script>
 	</body>
