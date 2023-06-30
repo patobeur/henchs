@@ -126,6 +126,12 @@ const DATAZ = {
 						top: 80, left: 250, zIndex: 0, rotate: 42, transform: 42
 					}
 				},
+				{
+					datas: {
+						title: 'this one is no good !', className: 'wall', width: 300, height: 30,
+						top: 40, left: 400, zIndex: 0
+					}
+				},
 			]
 		},
 		{ name: 'two', datas: { width: 1200, height: 300, top: 0, left: 0, zIndex: 0 } }
